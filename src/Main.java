@@ -8,13 +8,19 @@ public class Main {
         do {
             char field[][] = createField();
             boolean end;
+            boolean isLastHandlePlayer = false;
             do {
-                handlePlayer(field);
-                printField(field);
-                end = chekEnd(field, "Player", 'x');
-                handleComputer(field);
-                printField(field);
-                end = end || chekEnd(field, "Computer", '0');
+                if (isLastHandlePlayer) {
+                    isLastHandlePlayer = !(isLastHandlePlayer);
+                    handleComputer(field);
+                    printField(field);
+                    end = chekEnd(field, "Computer", '0');
+                } else {
+                    isLastHandlePlayer = !(isLastHandlePlayer);
+                    handlePlayer(field);
+                    printField(field);
+                    end = chekEnd(field, "Player", 'x');
+                }
             } while (end == false);
             System.out.println("Хотите сиграть еще раз? Если нет введите 0, если да любое другое целое число");
             isNewGame = sc.nextInt();
