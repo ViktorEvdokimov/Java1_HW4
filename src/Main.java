@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        char field[][] = createField();
-        int isNewPlay;
+        int isNewGame;
         do {
+            char field[][] = createField();
             boolean end;
             do {
                 handlePlayer(field);
@@ -17,8 +17,8 @@ public class Main {
                 end = end || chekEnd(field, "Computer", '0');
             } while (end == false);
             System.out.println("Хотите сиграть еще раз? Если нет введите 0, если да любое другое целое число");
-            isNewPlay = sc.nextInt();
-        }while (isNewPlay!=0);
+            isNewGame = sc.nextInt();
+        }while (isNewGame!=0);
         }
 
     static char[][] createField() {
@@ -79,6 +79,52 @@ public class Main {
 
     static void handleComputer (char [][]field){
         int x, y;
+        int vertical = field.length;
+        int horizontal = field.length;
+        int mainDiagonal = field.length;
+        int sideDiagonal = field.length;
+        for (int i=0; i< field.length; i++){
+            vertical = field.length;
+            horizontal = field.length;
+            for (int j=0; j< field[i].length; j++){
+                if (field[i][j]=='x') vertical--;
+                if (field[j][i]=='x') horizontal--;
+            }
+            if (vertical==1){
+                for(int j=0; j< field.length; j++){
+                    if (field[i][j]=='-'){
+                        field[i][j]='0';
+                        return;
+                    }
+                }
+            }
+            if (horizontal==1){
+                for(int j=0; j< field.length; j++){
+                    if (field[j][i]=='-') {
+                        field[j][i]='0';
+                        return;
+                    }
+                }
+            }
+            if (field[i][i]=='x') mainDiagonal--;
+            if (field[i][field.length-i-1]=='x') sideDiagonal--;
+        }
+        if (mainDiagonal==1){
+            for(int j=0; j< field.length; j++){
+                if (field[j][j]=='-') {
+                    field[j][j] = '0';
+                    return;
+                }
+            }
+        }
+        if (sideDiagonal==1){
+            for(int j=0; j< field.length; j++){
+                if (field[j][field.length-j-1]!='x') {
+                    field[j][field.length - j - 1] = '0';
+                    return;
+                }
+            }
+        }
         do{
             x = (int) (Math.random()*field.length);
             y = (int) (Math.random()*field.length);
