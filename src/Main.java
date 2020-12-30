@@ -5,6 +5,10 @@ public class Main {
     public static void main(String[] args) {
 	char field[][] = createField();
 	printField(field);
+	for (int i=0; i<5;i++) {
+        handlePlayer(field);
+        printField(field);
+    }
     }
 
     static char[][] createField() {
@@ -34,6 +38,33 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    static void handlePlayer (char [][]field){
+        System.out.println("Введите координаты ячейки");
+        int x, y;
+        do{
+        x = inCoordinate(field, 'x');
+        y = inCoordinate(field, 'y');
+        if (field[x][y]!='-') {
+            System.out.println("Указанная ячейка занята");
+            }
+        }while (field[x][y]!='-');
+        field [x][y] = 'x';
+    }
+
+
+    static int inCoordinate (char [][]field, char axis){
+        Scanner sc = new Scanner(System.in);
+        int coordinate = 0;
+        boolean outRange;
+        do {
+            System.out.println("Введите " + axis + " координату ячейки от 1 до " + (field.length + 1));
+            coordinate = sc.nextInt() - 1;
+            outRange =  coordinate>(field.length - 1) || coordinate<0;
+            if (outRange==true) System.out.println("Введенные координаты не входят в диапазон допустимых значений");
+        } while (outRange);
+        return coordinate;
     }
 
 
