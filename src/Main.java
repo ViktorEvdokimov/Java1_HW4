@@ -3,18 +3,23 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	char field[][] = createField();
-	printField(field);
-	boolean end;
-	do{
-        handlePlayer(field);
-        printField(field);
-        end = chekEnd(field, "Player", 'x');
-        handleComputer(field);
-        printField(field);
-        end = end || chekEnd(field, "Computer", '0');
-    } while (end==false);
-    }
+        Scanner sc = new Scanner(System.in);
+        char field[][] = createField();
+        int isNewPlay;
+        do {
+            boolean end;
+            do {
+                handlePlayer(field);
+                printField(field);
+                end = chekEnd(field, "Player", 'x');
+                handleComputer(field);
+                printField(field);
+                end = end || chekEnd(field, "Computer", '0');
+            } while (end == false);
+            System.out.println("Хотите сиграть еще раз? Если нет введите 0, если да любое другое целое число");
+            isNewPlay = sc.nextInt();
+        }while (isNewPlay!=0);
+        }
 
     static char[][] createField() {
         Scanner sc = new Scanner(System.in);
